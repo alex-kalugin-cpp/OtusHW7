@@ -1,0 +1,5 @@
+<map id="IObserverCmd" name="IObserverCmd">
+<area shape="rect" id="node2" href="$classCoutPrint.html" title="Класс для вывода блоков команд в файл " alt="" coords="5,80,88,107"/>
+<area shape="rect" id="node3" href="$classFilePrint.html" title="Класс для вывода блоков команд в файл " alt="" coords="112,80,187,107"/>
+<area shape="rect" id="node4" href="$classStringPrint.html" title="Класс для вывода блоков команд в вектор Класс для вывода блоков команд в вектор. Используется для тес..." alt="" coords="211,80,301,107"/>
+</map>
