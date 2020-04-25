@@ -36,10 +36,15 @@ set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 set(CPACK_PACKAGE_CONTACT example@example.com)
 
 include(CPack)
-#find_package(Gtest REQUIRED)
-
-#enable_testing()
-#add_executable(gtest_hw7 tests/gtests.cpp)
-#target_link_libraries(gtest_hw7 gtest)
-#target_include_directories(gtest_hw7 PRIVATE ${PROJECT_SOURCE_DIR})
-#set_property(TARGET gtest_hw7 PROPERTY CXX_STANDARD 14)
+find_package(GTest REQUIRED)
+find_package(Threads)
+include_directories(${GTEST_INCLUDE_DIRS})
+enable_testing()
+add_executable(gtest_hw7 tests/gtests.cpp)
+target_link_libraries(gtest_hw7
+    ${GTEST_LIBRARIES}
+   )
+target_link_libraries(gtest_hw7
+${CMAKE_THREAD_LIBS_INIT}
+)
+set_property(TARGET gtest_hw7 PROPERTY CXX_STANDARD 14)
