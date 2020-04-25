@@ -1,0 +1,40 @@
+dist: bionic
+language: cpp
+addons:
+  apt:
+    packages:
+      - doxygen
+      - doxygen-doc
+      - doxygen-latex
+      - doxygen-gui
+      - graphviz
+before_script:
+- sudo apt-get install libboost-test-dev doxygen -y
+- echo "deb http://archive.ubuntu.com/ubuntu bionic main universe" | sudo tee -a /etc/apt/sources.list
+- sudo apt-get update -qq
+- sudo apt-get install cmake libgtest-dev
+- cd /usr/src/gtest
+- sudo cmake CMakeLists.txt
+- sudo make
+- sudo cp *.a /usr/lib
+- cd $TRAVIS_BUILD_DIR
+script:
+- doxygen Doxyfile
+- cd $TRAVIS_BUILD_DIR
+- cmake .
+- cmake --build .
+- cmake --build . --target test
+- cmake --build . --target package
+
+deploy:
+   - provider: script
+     skip_cleanup: true
+     script:
+        - curl -T bulk-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -ualex-kalugin-cpp:$BINTRAY_API_KEY "https://api.bintray.com/content/alex-kalugin-cpp/Otus-cpp7/bulk/$TRAVIS_BUILD_NUMBER/bulk-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
+   - provider: pages
+     skip_cleanup: true
+     github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+     keep_history: true
+     on:
+       branch: master
+     local_dir: ./docs/html
